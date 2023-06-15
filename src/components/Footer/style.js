@@ -12,12 +12,36 @@ export const FooterSt = styled.footer`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+
+      > div{
+        width: 60%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        @media screen and (max-width: 500px){
+          flex-direction: column;
+        }
+      }
+
+    @media screen and (max-width: 850px){
+      flex-direction: column;
+
+      > div{
+        margin-top: 20px;
+        width: 100%;
+      }
+    }
   }
 `;
 
 export const FooterText = styled.section`
 
   width: 30%;
+
+  @media screen and (max-width: 850px){
+    width: 100%;
+  }
 
   h2{
     font-size: 1.75rem;
@@ -38,6 +62,11 @@ export const FooterEmail = styled.section`
     font-size: 1.4rem;
     margin-bottom: 10px;
   }
+
+  @media screen and (max-width: 500px){
+    width: 100%;
+    margin-bottom: 20px;
+  }
 `;
 
 export const EmailInfo = styled.form`
@@ -45,7 +74,8 @@ export const EmailInfo = styled.form`
   align-items: center;
 
   input{
-    width: 45%;
+    width: 100%;
+    max-width: 250px;
     padding: 7px 5px;
     font-size: 1rem;
     color: ${(props) => props.theme.textLigth};
@@ -80,7 +110,12 @@ export const EmailInfo = styled.form`
   }
 `;
 
-export const FoooterSocial = styled.div`
+export const FoooterSocial = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
   h2{
     font-size: 1.4rem;
     margin-bottom: 10px;
@@ -100,6 +135,18 @@ export const FoooterSocial = styled.div`
     &:hover{
       transition: 0.7s;
       transform: scale(1.15);
+    }
+  }
+
+  @media screen and (max-width: 500px){
+    div{
+      justify-content: center;
+    }
+
+    svg{
+      font-size: 2.4rem;
+      margin-right: 0px;
+      margin: 0 10px;
     }
   }
 

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import { Link as Links } from 'react-scroll';
 // import { Link } from 'react-router-dom';
-import { AiFillBulb } from 'react-icons/ai';
+import { AiFillBulb, AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import * as style from './style';
 import Center from '../../components/Center';
 import banner from '../../assets/banner_home.webp';
@@ -18,18 +18,46 @@ function Home() {
     { icons: <AiFillBulb />, title: 'Beneficios', text: 'Amet reprehenderit reprehenderit occaecat ut.Amet reprehenderit reprehenderit occaecat ut.' },
   ];
 
+  const [show, setShow] = useState(false);
+
+  const handleMenu = () => {
+    setShow(!show);
+  };
+
   return (
     <>
       <style.HomeHeader>
         <Center>
           <h2>CIFinanças</h2>
 
-          <ul>
+          <style.UlDesktop>
             <li><a href="id">Sobre</a></li>
             <li><a href="f">Beneficios</a></li>
             <li><a href="/home">Entrar</a></li>
-          </ul>
+          </style.UlDesktop>
+
+          <style.MenuIcons>
+
+            {show ? (
+              <AiOutlineClose onClick={handleMenu} />
+            ) : (
+              <AiOutlineMenu onClick={handleMenu} />
+            ) }
+          </style.MenuIcons>
+
         </Center>
+
+        {show ? (
+          <style.UlMenu>
+            <li><a href="id">Sobre</a></li>
+            <li><a href="f">Beneficios</a></li>
+            <li><a href="/home">Entrar</a></li>
+          </style.UlMenu>
+
+        ) : (
+          <>
+          </>
+        )}
       </style.HomeHeader>
 
       <style.HomeBanner isBanner={banner}>

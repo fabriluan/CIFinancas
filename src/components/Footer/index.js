@@ -14,37 +14,39 @@ export default function Footer() {
           <span>Transformando finanças, construindo futuros</span>
         </style.FooterText>
 
-        <style.FooterEmail>
-          <h2>Receba novas informações</h2>
+        <div>
+          <style.FooterEmail>
+            <h2>Receba novas informações</h2>
 
-          <style.EmailInfo>
-            <input type="text" placeholder="Digite seu email" />
+            <style.EmailInfo>
+              <input type="text" placeholder="Digite seu email" />
 
-            <button type="submit">
-              <BsArrowRight />
-            </button>
+              <button type="submit">
+                <BsArrowRight />
+              </button>
 
-          </style.EmailInfo>
-        </style.FooterEmail>
+            </style.EmailInfo>
+          </style.FooterEmail>
 
-        <style.FoooterSocial>
-          <h2>Nos siga em</h2>
+          <style.FoooterSocial>
+            <h2>Nos siga em</h2>
 
-          <div>
-            <a href="instagram">
-              <BsInstagram />
-            </a>
+            <div>
+              <a href="instagram">
+                <BsInstagram />
+              </a>
 
-            <a href="instagram">
-              <BsLinkedin />
-            </a>
+              <a href="instagram">
+                <BsLinkedin />
+              </a>
 
-            <a href="instagram">
-              <BsGithub />
-            </a>
-          </div>
+              <a href="instagram">
+                <BsGithub />
+              </a>
+            </div>
 
-        </style.FoooterSocial>
+          </style.FoooterSocial>
+        </div>
 
       </Center>
 

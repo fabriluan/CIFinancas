@@ -46,6 +46,30 @@ const BenefitSt = styled.section`
       background-color: ${(props) => props.theme.layoutHover};
     }
   }
+
+  @media screen and (max-width: 850px){
+    width: 60%;
+    margin-bottom: 30px;
+    height: 400px;
+  }
+
+  @media screen and (max-width: 750px){
+    width: 100%;
+
+    a{
+      margin-top: 40px;
+    }
+  }
+
+  @media screen and (max-width: 500px){
+    h1{
+      font-size: 1.85rem;
+    }
+
+    span{
+      font-size: 1.15rem;
+    }
+  }
 `;
 
 export default BenefitSt;
