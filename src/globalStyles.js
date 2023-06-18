@@ -27,6 +27,10 @@ const GlobalStyles = createGlobalStyle`
     cursor: pointer;
   }
 
+  button{
+    cursor: pointer;
+  }
+
   .classCenter{
     display: flex;
     justify-content: center;
