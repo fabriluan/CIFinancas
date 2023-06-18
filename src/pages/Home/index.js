@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 // import { Link as Links } from 'react-scroll';
 // import { Link } from 'react-router-dom';
-import { AiFillBulb, AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import {
+  AiOutlineClose, AiOutlineMenu, AiFillCalculator, AiFillControl,
+} from 'react-icons/ai';
+import { FaMoneyBillWave } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import * as style from './style';
 import Center from '../../components/Center';
 import banner from '../../assets/banner_home.webp';
@@ -13,9 +17,12 @@ import Benefit from '../../components/Benefit';
 
 function Home() {
   const benefits = [
-    { icons: <AiFillBulb />, title: 'Beneficios', text: 'Amet reprehenderit reprehenderit occaecat ut.Amet reprehenderit reprehenderit occaecat ut.' },
-    { icons: <AiFillBulb />, title: 'Beneficios', text: 'Amet reprehenderit reprehenderit occaecat ut.Amet reprehenderit reprehenderit occaecat ut.' },
-    { icons: <AiFillBulb />, title: 'Beneficios', text: 'Amet reprehenderit reprehenderit occaecat ut.Amet reprehenderit reprehenderit occaecat ut.' },
+    { icons: <AiFillCalculator />, title: 'Controle Financeiro', text: 'Por meio de conteúdo interativo, ferramentas e calculadoras, o site pode oferecer orientação personalizada para as pessoas avaliarem sua situação financeira atual.' },
+    { icons: <FaMoneyBillWave />, title: 'Gestão de Orçamento', text: 'O site pode fornecer recursos e modelos para auxiliar as pessoas a criar e gerenciar um orçamento eficaz.' },
+    { icons: <AiFillControl />, title: 'Planejamento Financeiro', text: 'Por meio de guias e artigos, o site pode ajudar as pessoas a desenvolver um plano financeiro abrangente para atingir objetivos de longo prazo' },
+    { icons: <AiFillCalculator />, title: 'Controle Financeiro', text: 'Por meio de conteúdo interativo, ferramentas e calculadoras, o site pode oferecer orientação personalizada para as pessoas avaliarem sua situação financeira atual.' },
+    { icons: <FaMoneyBillWave />, title: 'Gestão de Orçamento', text: 'O site pode fornecer recursos e modelos para auxiliar as pessoas a criar e gerenciar um orçamento eficaz.' },
+    { icons: <AiFillControl />, title: 'Planejamento Financeiro', text: 'Por meio de guias e artigos, o site pode ajudar as pessoas a desenvolver um plano financeiro abrangente para atingir objetivos de longo prazo' },
   ];
 
   const [show, setShow] = useState(false);
@@ -33,7 +40,7 @@ function Home() {
           <style.UlDesktop>
             <li><a href="id">Sobre</a></li>
             <li><a href="f">Beneficios</a></li>
-            <li><a href="/home">Entrar</a></li>
+            <li><Link to="/login">Entrar</Link></li>
           </style.UlDesktop>
 
           <style.MenuIcons>

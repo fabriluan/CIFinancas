@@ -26,6 +26,12 @@ const GlobalStyles = createGlobalStyle`
     color: inherit;
     cursor: pointer;
   }
+
+  .classCenter{
+    display: flex;
+    justify-content: center;
+    justify-content: center;
+  }
 `;
 
 export default GlobalStyles;

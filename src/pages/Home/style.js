@@ -138,7 +138,7 @@ export const HomeBanner = styled.section`
   @media screen and (max-width: 500px){
     background-size: 300% 180%;
   }
-  }
+
 `;
 
 export const BannerText = styled.div`
@@ -200,7 +200,7 @@ export const BannerText = styled.div`
 `;
 
 export const HomeAbout = styled.section`
-  padding: 40px 10px;
+  padding: 50px 10px;
 `;
 
 export const AboutImg = styled.div`
@@ -214,7 +214,7 @@ export const AboutImg = styled.div`
 `;
 
 export const AboutInfo = styled.section`
-  padding: 10px;
+  padding: 20px;
   display: flex;
   margin-top: 25px;
   justify-content: space-between;
@@ -222,7 +222,7 @@ export const AboutInfo = styled.section`
 
   img{
     width: 35%;
-    height: 300px;
+    height: 380px;
   }
 
   @media screen and (max-width: 850px){
@@ -286,7 +286,7 @@ export const AboutText = styled.div`
 export const HomeBenefit = styled.article`
   background-color: ${(props) => props.theme.content};
   color: ${(props) => props.theme.textLigth};
-  padding: 30px 0 50px 0;
+  padding: 30px 0 10px 0;
 
   > .center{
     display: flex;

@@ -1,9 +1,10 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
 import GlobalStyles from './globalStyles';
 import { themeLigth } from './style/theme';
-import Home from './pages/Home';
 import Footer from './components/Footer';
+import BrowserRoutes from './routes';
 
 function App() {
   return (
@@ -11,9 +12,12 @@ function App() {
 
       <GlobalStyles />
 
-      <Home />
+      <BrowserRouter>
 
-      <Footer />
+        <BrowserRoutes />
+        <Footer />
+      </BrowserRouter>
+
     </ThemeProvider>
   );
 }

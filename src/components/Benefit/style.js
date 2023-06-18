@@ -5,6 +5,7 @@ const BenefitSt = styled.section`
   padding: 20px;
   border-radius: 1rem;
   background-color: ${(props) => props.theme.backgroundLigth};
+  margin-bottom: 50px;
   color: ${(props) => props.theme.textDark};
   display: flex;
   align-items: center;
@@ -16,6 +17,7 @@ const BenefitSt = styled.section`
   }
 
   h1{
+    text-align: center;
     font-size: 2rem;
     font-weight: 600;
     margin-top: 20px;
