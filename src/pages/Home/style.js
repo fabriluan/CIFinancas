@@ -1,9 +1,13 @@
+import { motion } from 'framer-motion';
 import { styled } from 'styled-components';
 
-export const HomeHeader = styled.header`
+export const HomeHeader = motion(styled.header`
+  position: fixed;
   display: flex;
   width: 100%;
   min-height: 80px;
+  align-items: center;
+  justify-content: center;
   /* padding: 10px; */
   background-color: ${(props) => props.theme.layout};
   color: ${(props) => props.theme.textLigth};
@@ -20,7 +24,7 @@ export const HomeHeader = styled.header`
     font-weight: 700;
   }
 
-`;
+`);
 
 export const UlDesktop = styled.ul`
   list-style: none;
@@ -62,9 +66,12 @@ export const UlDesktop = styled.ul`
     }
 `;
 
-export const MenuIcons = styled.div`
+export const MenuIcons = styled.button`
   display: none;
   font-size: 2.2rem;
+  background-color: transparent;
+  border: 0;
+  color: inherit;
   cursor: pointer;
 
   @media screen and (max-width: 750px){
@@ -72,11 +79,11 @@ export const MenuIcons = styled.div`
   }
 `;
 
-export const UlMenu = styled.ul`
+export const UlMenu = motion(styled.ul`
   display: none;
   top: 80px;
-  position: absolute;
-  width: 100%;
+  position: fixed;
+  width: 0%;
   height: 100vh;
   flex-direction: column;
   align-items: center;
@@ -87,9 +94,10 @@ export const UlMenu = styled.ul`
 
   li{
     width: 100%;
+    font-size: 1.4rem;
 
     a{
-      font-size: 1.4rem;
+      font-size: inherit;
       padding: 25px 0;
       display: flex;
       align-items: center;
@@ -105,16 +113,19 @@ export const UlMenu = styled.ul`
     }
   }
 
+  @media screen and (min-width: 750px){
+    display: none !important;
+  }
+/*
   @media screen and (max-width: 750px){
     display: flex;
-  }
-`;
+  } */
+`);
 
 export const HomeBanner = styled.section`
   width: 100%;
   height: 85vh;
   min-height: 740px;
-  background-color: red;
   background-image: url(${(props) => props.isBanner});
   background-size: 100% 130%;
   background-position: 100%;

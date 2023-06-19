@@ -6,6 +6,8 @@ import {
 } from 'react-icons/ai';
 import { FaMoneyBillWave } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Link as LinkS } from 'react-scroll';
 import * as style from './style';
 import Center from '../../components/Center';
 import banner from '../../assets/banner_home.webp';
@@ -31,40 +33,53 @@ function Home() {
     setShow(!show);
   };
 
+  const animateMenu = {
+    open: {
+      width: '100%', display: 'flex', left: 0, transition: { duration: 0.3, when: 'beforeChildren' },
+    },
+    closed: {
+      width: '0%', left: -20, transition: { duration: 0.3, when: 'afterChildren' }, transitionEnd: { display: 'none' },
+    },
+  };
+
+  const animateLink = {
+    open: {
+      opacity: 1, fontSize: '1.4rem',
+    },
+    closed: {
+      opacity: 1, fontSize: '0rem',
+    },
+  };
+
   return (
     <>
-      <style.HomeHeader>
+      <style.HomeHeader animate={show ? 'open' : 'closed'} variants={show}>
         <Center>
           <h2>CIFinanças</h2>
 
           <style.UlDesktop>
-            <li><a href="id">Sobre</a></li>
-            <li><a href="f">Beneficios</a></li>
+            <li><LinkS to="about" offset={-80} smooth>Sobre</LinkS></li>
+            <li><LinkS to="benefit" offset={-80} smooth>Beneficios</LinkS></li>
             <li><Link to="/login">Entrar</Link></li>
           </style.UlDesktop>
 
-          <style.MenuIcons>
+          <style.MenuIcons onClick={handleMenu}>
 
             {show ? (
-              <AiOutlineClose onClick={handleMenu} />
+              <AiOutlineClose />
             ) : (
-              <AiOutlineMenu onClick={handleMenu} />
+              <AiOutlineMenu />
             ) }
           </style.MenuIcons>
 
         </Center>
 
-        {show ? (
-          <style.UlMenu>
-            <li><a href="id">Sobre</a></li>
-            <li><a href="f">Beneficios</a></li>
-            <li><a href="/home">Entrar</a></li>
-          </style.UlMenu>
+        <style.UlMenu variants={animateMenu}>
+          <motion.li variants={animateLink}><LinkS onClick={handleMenu} to="about" offset={-80} smooth>Sobre</LinkS></motion.li>
+          <motion.li variants={animateLink}><LinkS onClick={handleMenu} to="benefit" offset={-80} smooth>Beneficios</LinkS></motion.li>
+          <motion.li variants={animateLink}><Link to="/login">Entrar</Link></motion.li>
+        </style.UlMenu>
 
-        ) : (
-          <>
-          </>
-        )}
       </style.HomeHeader>
 
       <style.HomeBanner isBanner={banner}>
@@ -77,7 +92,7 @@ function Home() {
         </Center>
       </style.HomeBanner>
 
-      <style.HomeAbout>
+      <style.HomeAbout id="about">
         <Center>
           <style.AboutImg>
             <img src={about1} alt="foto de calcu" />
@@ -96,7 +111,7 @@ function Home() {
         </Center>
       </style.HomeAbout>
 
-      <style.HomeBenefit>
+      <style.HomeBenefit id="benefit">
         <Center>
           <h2>Beneficios</h2>
 
