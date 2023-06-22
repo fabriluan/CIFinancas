@@ -31,26 +31,6 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
 
-  > button{
-    width: 80%;
-    margin: 0 auto;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    margin-top: 50px;
-    padding: 13px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: ${(props) => props.theme.textLigth};
-    background-color: ${(props) => props.theme.content};
-    border: 0;
-    border-radius: 0.5rem;
-
-    @media screen and (max-width: 750px){
-      width: 100%;
-    }
-  }
-
   a{
     margin: 0 auto;
     font-size: 1.2rem;
@@ -91,5 +71,26 @@ export const GroupInput = styled.div`
     height: 50px;
     padding-left: 40px;
     font-size: 1.1rem;
+  }
+`;
+
+export const ButtonForm = styled.button`
+  width: 80%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-top: 50px;
+  padding: 13px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: ${(props) => props.theme.textLigth};
+  background-color: ${(props) => (props.isVerif ? props.theme.content : props.theme.contentLigth)};
+  cursor: ${(props) => (props.isVerif ? 'pointer' : 'not-allowed')};
+  border: 0;
+  border-radius: 0.5rem;
+
+  @media screen and (max-width: 750px){
+    width: 100%;
   }
 `;

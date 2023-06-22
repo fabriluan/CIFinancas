@@ -3,6 +3,7 @@ export const themeLigth = {
   backgroundContent: '#D9D9D9',
   backgroundLigth: '#FFFFFF',
   content: '#293740',
+  contentLigth: '#525A66',
   contentDark: '#00121E',
   contentBorder: '#000000',
   layout: '#F24405',
