@@ -1,9 +1,32 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../redux/user/slice';
 
 export default function RouteWrapper({ loggedComponent, defaultComponent, IsPrivate }) {
-  const signed = false;
-  const loading = false;
+  const { user } = useSelector((rootReducer) => rootReducer.userReducer);
+
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [signed, setSigned] = useState(false);
+
+  useEffect(() => {
+    const LoadStorage = () => {
+      const storage = localStorage.getItem('@CIF');
+
+      if (storage) {
+        registerUser(JSON.parse(storage));
+        setSigned(true);
+        setLoading(false);
+      } else {
+        setSigned(false);
+      }
+
+      setLoading(false);
+    };
+
+    LoadStorage();
+  }, [user]);
 
   function LoadComponent() {
     if (loading) {
@@ -13,11 +36,11 @@ export default function RouteWrapper({ loggedComponent, defaultComponent, IsPriv
     }
 
     if (!signed && IsPrivate) {
-      return <Navigate to="/" />;
+      return navigate('/login');
     }
 
     if (signed && !IsPrivate) {
-      return <Navigate to="/" />;
+      return navigate('/dashboard');
     }
   }
 

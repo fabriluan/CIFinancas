@@ -2,14 +2,49 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUserAlt } from 'react-icons/fa';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { useDispatch } from 'react-redux';
 import * as style from '../SingIn/style';
 import Center from '../../components/Center';
 import Enter from '../../components/Enter';
+import { auth, db } from '../../service/firebaseConnection';
+import { registerUser } from '../../redux/user/slice';
 
 function SingUp() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then(async (value) => {
+        const { uid } = value.user;
+        await setDoc(doc(db, 'users', uid), {
+          name,
+          avatarUrl: null,
+        })
+          .then(() => {
+            const data = {
+              uid,
+              email: value.user.email,
+              name,
+            };
+
+            dispatch(registerUser(data));
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <Center class1="classCenter">
@@ -49,7 +84,13 @@ function SingUp() {
 
           <Enter />
 
-          <style.ButtonForm type="submit" isVerif={name && email && password}>Criar</style.ButtonForm>
+          <style.ButtonForm
+            type="submit"
+            isVerif={name && email && password}
+            onClick={handleSubmit}
+          >
+            Criar
+          </style.ButtonForm>
           <Link to="/login">Já possui conta? Entre agora</Link>
         </style.Form>
       </style.Sing>

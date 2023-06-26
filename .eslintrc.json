@@ -20,6 +20,13 @@
     "rules": {
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "import/no-extraneous-dependencies": "off",
-      "max-len": "off"
+      "max-len": "off",
+      "no-param-reassign": [
+        "error",
+        {
+          "props": true,
+          "ignorePropertyModificationsFor": ["state"]
+        }
+      ]
     }
 }
