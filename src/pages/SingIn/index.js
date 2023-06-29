@@ -14,30 +14,76 @@ import { registerUser } from '../../redux/user/slice';
 function SingIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [load, setLoad] = useState(false);
+  const [mensagemError, setMensagemError] = useState('');
+  const [alertEmail, setAlertEmail] = useState(false);
+  const [alertPassword, setAlertPassword] = useState(false);
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await signInWithEmailAndPassword(auth, email, password)
-      .then(async (value) => {
-        const { uid } = value.user;
+    try {
+      setLoad(true);
 
-        const docRef = doc(db, 'users', uid);
-        const userProfile = await getDoc(docRef);
+      if (email === '') {
+        setAlertEmail(true);
+        throw new Error('O email está vazio!');
+      }
 
-        const data = {
-          uid,
-          email: value.user.email,
-          name: userProfile.data().nome,
-          avatarUrl: userProfile.data().avatarUrl,
-        };
+      if (password === '') {
+        setAlertPassword(true);
+        throw new Error('A senha está vazia!');
+      }
 
-        dispatch(registerUser(data));
-      })
-      .catch(() => {
+      await signInWithEmailAndPassword(auth, email, password)
+        .then(async (value) => {
+          const { uid } = value.user;
 
-      });
+          const docRef = doc(db, 'users', uid);
+          const userProfile = await getDoc(docRef);
+
+          const data = {
+            uid,
+            email: value.user.email,
+            name: userProfile.data().nome,
+            avatarUrl: userProfile.data().avatarUrl,
+          };
+
+          dispatch(registerUser(data));
+        })
+        .catch((erro) => {
+          throw Error(erro.message);
+        });
+    } catch (error) {
+      const result = error.message.split(/\(([^)]+)\)/, 2);
+      const resultMsg = result[1];
+
+      console.log(result);
+
+      setMensagemError(error.message);
+      switch (resultMsg) {
+        case 'auth/invalid-email':
+          setAlertEmail(true);
+          setMensagemError('Digite um email válido');
+          break;
+
+        case 'auth/user-not-found':
+          setAlertEmail(true);
+          setMensagemError('A conta do usuário não existe');
+          break;
+
+        case 'auth/wrong-password':
+          setAlertPassword(true);
+          setMensagemError('A senha está incorreta');
+          break;
+
+        default:
+          break;
+      }
+    } finally {
+      setLoad(false);
+    }
   };
 
   return (
@@ -46,29 +92,46 @@ function SingIn() {
         <h2>Entrar</h2>
 
         <style.Form>
-          <style.GroupInput>
+
+          {
+            alertEmail && (
+              <span>{mensagemError}</span>
+            )
+          }
+
+          <style.GroupInput isAlertEmail={alertEmail}>
             <MdEmail />
             <input
               type="text"
               placeholder="Email"
+              name="email"
               value={email}
+              onClick={() => setAlertEmail(false)}
               onChange={(e) => setEmail(e.target.value)}
             />
           </style.GroupInput>
 
-          <style.GroupInput>
+          {
+            alertPassword && (
+              <span>{mensagemError}</span>
+            )
+          }
+
+          <style.GroupInput isAlertPassword={alertPassword}>
             <FaLock />
             <input
               type="text"
               placeholder="Senha"
+              name="password"
               value={password}
+              onClick={() => setAlertPassword(false)}
               onChange={(e) => setPassword(e.target.value)}
             />
           </style.GroupInput>
 
           <Enter />
 
-          <style.ButtonForm type="submit" isVerif={email && password} onClick={handleSubmit}>Entrar</style.ButtonForm>
+          <style.ButtonForm type="submit" isVerif={email && password} onClick={handleSubmit}>{load ? 'Carregando...' : 'Entrar'}</style.ButtonForm>
           <Link to="/register">Não possui conta? Crie uma agora</Link>
         </style.Form>
       </style.Sing>

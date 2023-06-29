@@ -2,12 +2,12 @@ import { styled } from 'styled-components';
 
 export const Sing = styled.section`
   width: 100%;
-  max-width: 950px;
+  max-width: 700px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  height: 750px;
+  min-height: 700px;
   margin-top: 40px;
   margin-bottom: 40px;
   padding: 30px 50px;
@@ -37,6 +37,14 @@ export const Form = styled.form`
     margin-top: 5px;
     text-decoration: underline;
     text-align: center;
+  }
+
+  span{
+    font-size: 1.2rem;
+    background-color: ${(props) => props.theme.layoutHover};
+    border-radius: 0.5rem;
+    padding: 10px;
+    margin-bottom: -10px;
   }
 `;
 
@@ -71,6 +79,45 @@ export const GroupInput = styled.div`
     height: 50px;
     padding-left: 40px;
     font-size: 1.1rem;
+  }
+
+  input[name="name"]{
+
+    ${(props) => (props.isAlertName ? (
+    `border: 1px solid red;
+    color: red;
+    &::placeholder{ color: red; }`
+  ) : (
+    ''
+  ))}
+}
+
+  input[name="email"]{
+
+    ${(props) => (props.isAlertEmail ? (
+    `border: 1px solid red;
+      color: red;
+      &::placeholder{ color: red; }`
+  ) : (
+    ''
+  ))}
+  }
+
+  input[name="password"]{
+
+    ${(props) => (props.isAlertPassword ? (
+    `border: 1px solid red;
+      color: red;
+      &::placeholder{ color: red; }`
+  ) : (
+    ''
+  ))}
+  }
+
+  span{
+    width: 100%;
+    z-index: 99;
+    background-color: red;
   }
 `;
 
