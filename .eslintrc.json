@@ -28,6 +28,7 @@
           "ignorePropertyModificationsFor": ["state"]
         }
       ],
-      "react/jsx-no-useless-fragment": [2, { "allowExpressions": false }]
+      "react/jsx-no-useless-fragment": [2, { "allowExpressions": false }],
+      "react/prop-types": "off"
     }
 }

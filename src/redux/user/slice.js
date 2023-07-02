@@ -13,9 +13,15 @@ const userSlice = createSlice({
       localStorage.setItem('@CIF', JSON.stringify(state.user));
     },
 
+    logoutUser: (state, action) => {
+      localStorage.removeItem('@CIF');
+
+      state.user = action.payload;
+    },
+
   },
 });
 
-export const { registerUser } = userSlice.actions;
+export const { registerUser, logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;

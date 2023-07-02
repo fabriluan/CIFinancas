@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdEmail } from 'react-icons/md';
 import { FaLock } from 'react-icons/fa';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import * as style from './style';
 import Center from '../../components/Center';
@@ -86,6 +86,30 @@ function SingIn() {
     }
   };
 
+  const handleGoogle = () => {
+    const provider = new GoogleAuthProvider();
+
+    signInWithPopup(auth, provider)
+      .then(async (value) => {
+        const { uid } = value.user;
+
+        await setDoc(doc(db, 'users', uid), {
+          nome: value.user.displayName,
+          avatarUrl: value.user.photoURL,
+
+        }).then(() => {
+          const data = {
+            uid,
+            email: value.user.email,
+            name: value.user.displayName,
+            avatarUrl: value.user.photoURL,
+          };
+
+          dispatch(registerUser(data));
+        });
+      });
+  };
+
   return (
     <Center class1="classCenter">
       <style.Sing>
@@ -129,7 +153,7 @@ function SingIn() {
             />
           </style.GroupInput>
 
-          <Enter />
+          <Enter google={handleGoogle} />
 
           <style.ButtonForm type="submit" isVerif={email && password} onClick={handleSubmit}>{load ? 'Carregando...' : 'Entrar'}</style.ButtonForm>
           <Link to="/register">Não possui conta? Crie uma agora</Link>

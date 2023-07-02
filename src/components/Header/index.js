@@ -4,11 +4,19 @@ import { BiLogOutCircle } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
 import * as style from './style';
 import Center from '../Center';
 import profile from '../../assets/about.webp';
+import { auth } from '../../service/firebaseConnection';
+import { logoutUser } from '../../redux/user/slice';
 
 export default function Header() {
+  const dispatch = useDispatch();
+
+  const storage = localStorage.getItem('@CIF');
+  const { avatarUrl } = JSON.parse(storage);
   const [show, setShow] = useState(false);
   const { innerWidth: width } = window;
 
@@ -16,7 +24,11 @@ export default function Header() {
     setShow(!show);
   };
 
-  /* @media screen and (min-width: 750px){} */
+  const handleLogout = async () => {
+    await signOut(auth);
+
+    dispatch(logoutUser(false));
+  };
 
   const animateMenu = {
     open: {
@@ -60,7 +72,7 @@ export default function Header() {
             ))}
           </style.HeaderMenuUl>
 
-          <style.HeaderLogout>
+          <style.HeaderLogout onClick={handleLogout}>
             <BiLogOutCircle />
 
             <span>Sair</span>
@@ -70,7 +82,7 @@ export default function Header() {
         <style.HeaderProfile>
           <h2>Fabricio Luan</h2>
 
-          <img src={profile} alt="foto de perfil" />
+          <img src={avatarUrl ? `${avatarUrl}` : `${profile}`} alt="foto de perfil" />
         </style.HeaderProfile>
 
       </Center>
