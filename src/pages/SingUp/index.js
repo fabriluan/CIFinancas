@@ -70,8 +70,6 @@ function SingUp() {
     } catch (error) {
       const result = error.message.split(/\(([^)]+)\)/, 2);
 
-      console.log(result);
-
       const errorMsg = result[1];
       setMensagemError(error.message);
 
