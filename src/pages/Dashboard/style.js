@@ -159,10 +159,16 @@ export const AboutInfos = styled.section`
   }
 `;
 
-export const AddOperation = styled.section`
-  position: relative;
+export const OperationAndHistory = styled.section`
   width: 100%;
   margin-top: 20px;
+  display: flex;
+`;
+
+export const AddOperation = styled.section`
+  position: relative;
+  width: 70%;
+  margin-right: auto;
   color: ${(props) => props.theme.textLigth};
   background-color: ${(props) => props.theme.content};
   padding: 15px;
@@ -170,7 +176,7 @@ export const AddOperation = styled.section`
 
 export const AddOperationButtonClose = styled.button`
   position: absolute;
-  top: 15px;
+  top: 10px;
   right: 15px;
   display: flex;
   justify-content: center;
@@ -186,4 +192,119 @@ export const AddOperationButtonClose = styled.button`
 
 export const AddOperationForm = styled.form`
   display: flex;
+  flex-direction: column;
+`;
+
+export const GroupInput = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:nth-child(2), &:nth-child(3){
+    margin-top: 50px;
+  }
+
+  > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span{
+      font-weight: 100;
+      font-size: 1.2rem;
+      margin-left: 10px;
+    }
+  }
+
+  select{
+    width: 100%;
+    max-width: 200px;
+    font-size: 1.2rem;
+    padding: 2px;
+  }
+
+  input[type="text"], input[type="date"]{
+    width: 100%;
+    border-radius: 0.5rem;
+    max-width: 400px;
+    font-size: 1.2rem;
+    padding: 5px 7px;
+  }
+
+  input[type="date"]{
+    max-width: 200px;
+    font-size: 1rem;
+  }
+
+  input[type="checkbox"]{
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+
+  textarea{
+    border-radius: 0.5rem;
+    padding: 10px;
+    font-size: 1.1rem;
+    width: 75%;
+    resize: none;
+    height: 150px;
+  }
+
+  button{
+    background-color: ${(props) => props.theme.layout};
+    border: 1px solid ${(props) => props.theme.layoutHover};
+    color: ${(props) => props.theme.textLigth};
+    padding: 7px;
+    width: 20%;
+    font-weight: 900;
+    font-size: 1.3rem;
+    border-radius: 0.5rem;
+    margin-top: auto;
+  }
+`;
+
+export const History = styled.section`
+  width: 29%;
+  padding: 15px;
+  margin-left: auto;
+  color: ${(props) => props.theme.textLigth};
+  border-radius: 0.5rem;
+  background-color: ${(props) => props.theme.contentDark};
+
+  h2{
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+`;
+
+export const HistoryAction = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-radius: 0.5rem;
+  background-color: ${(props) => props.theme.contentLigth};
+  padding: 5px 10px;
+  margin-top: 5px;
+
+  h3{
+    font-size: 1.1rem;
+  }
+
+  p{
+    color: red;
+  }
+
+  button{
+    background-color: transparent;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: ${(props) => props.theme.textLigth};
+  }
 `;

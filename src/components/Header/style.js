@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { styled } from 'styled-components';
 
 export const HeaderDashboard = motion(styled.header`
+  z-index: 99;
   background-color: ${(props) => props.theme.layout};
   color: ${(props) => props.theme.textLigth};
   padding: 10px 0;

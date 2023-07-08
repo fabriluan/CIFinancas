@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BiDownArrowCircle, BiUpArrowCircle } from 'react-icons/bi';
+import { BiDownArrowCircle, BiUpArrowCircle, BiSolidEditAlt } from 'react-icons/bi';
 import { FaMoneyBills } from 'react-icons/fa6';
 import { TfiMenuAlt } from 'react-icons/tfi';
 import { IoCloseSharp } from 'react-icons/io5';
@@ -10,6 +10,7 @@ import * as styles from './style';
 
 function Dasboard() {
   const [operation, setOperation] = useState(false);
+  const [history, setHistory] = useState(false);
 
   return (
     <>
@@ -68,7 +69,7 @@ function Dasboard() {
 
               <styles.ButtonAddOperation onClick={() => setOperation(!operation)}>+ Adicionar nova operação</styles.ButtonAddOperation>
 
-              <styles.ButtonHistoriOperation>
+              <styles.ButtonHistoriOperation onClick={() => setHistory(!history)}>
                 <TfiMenuAlt />
                 {' '}
                 <span>Historico de operações</span>
@@ -76,27 +77,67 @@ function Dasboard() {
 
             </styles.ContentAddInfosButtons>
 
-            {operation && (
-              <styles.AddOperation>
-                <styles.AddOperationButtonClose>
-                  <IoCloseSharp />
-                </styles.AddOperationButtonClose>
+            <styles.OperationAndHistory>
+              {operation && (
+                <styles.AddOperation>
+                  <styles.AddOperationButtonClose>
+                    <IoCloseSharp />
+                  </styles.AddOperationButtonClose>
 
-                <styles.AddOperationForm>
-                  <select>
-                    <option>Entrada</option>
-                  </select>
-                </styles.AddOperationForm>
-              </styles.AddOperation>
-            )}
+                  <styles.AddOperationForm>
+                    <styles.GroupInput>
+                      <select>
+                        <option>Entrada</option>
+                      </select>
+                    </styles.GroupInput>
 
-            {!operation && (
+                    <styles.GroupInput>
+                      <input type="text" />
+
+                      <div>
+                        <input type="checkbox" />
+                        <span>Agendar data</span>
+                      </div>
+
+                      <input type="date" />
+
+                    </styles.GroupInput>
+
+                    <styles.GroupInput>
+                      <textarea placeholder="Digite uma descrição" />
+
+                      <button type="submit">Registrar</button>
+
+                    </styles.GroupInput>
+
+                  </styles.AddOperationForm>
+                </styles.AddOperation>
+              )}
+
+              {history && (
+                <styles.History>
+                  <h2>Historico de operações</h2>
+
+                  <styles.HistoryAction>
+                    <h3>Entrada</h3>
+
+                    <p>R$ + 800,00</p>
+
+                    <button type="button">
+                      <BiSolidEditAlt />
+                    </button>
+                  </styles.HistoryAction>
+                </styles.History>
+              )}
+            </styles.OperationAndHistory>
+
+            {!operation && !history ? (
               <styles.AboutInfos>
                 <h2>Gerencie agora seu dinheiro</h2>
 
                 <img src={img} alt="foto de perfil" />
               </styles.AboutInfos>
-            )}
+            ) : (<u />)}
 
           </styles.ContentAddInfos>
         </styles.DashboardSt>
