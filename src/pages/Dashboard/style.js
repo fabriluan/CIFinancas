@@ -92,6 +92,8 @@ export const InfosTotal = styled.div`
 
 export const ContentAddInfos = styled.section`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 50px;
 `;
 
@@ -137,4 +139,51 @@ export const ButtonHistoriOperation = styled.button`
     scale: 1.01;
     background-color: ${(props) => props.theme.backgroundContent};
   }
+`;
+
+export const AboutInfos = styled.section`
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+
+  h2{
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+
+  img{
+    margin: 30px 0;
+    width: 100%;
+    max-width: 400px;
+  }
+`;
+
+export const AddOperation = styled.section`
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+  color: ${(props) => props.theme.textLigth};
+  background-color: ${(props) => props.theme.content};
+  padding: 15px;
+`;
+
+export const AddOperationButtonClose = styled.button`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.2rem;
+  background-color: transparent;
+  border: 0;
+
+  svg{
+    color: white;
+  }
+`;
+
+export const AddOperationForm = styled.form`
+  display: flex;
 `;

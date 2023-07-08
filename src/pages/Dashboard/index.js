@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BiDownArrowCircle, BiUpArrowCircle } from 'react-icons/bi';
 import { FaMoneyBills } from 'react-icons/fa6';
 import { TfiMenuAlt } from 'react-icons/tfi';
+import { IoCloseSharp } from 'react-icons/io5';
 import Header from '../../components/Header';
 import Center from '../../components/Center';
+import img from '../../assets/transferencia.png';
 import * as styles from './style';
 
 function Dasboard() {
+  const [operation, setOperation] = useState(false);
+
   return (
     <>
       <Header />
@@ -62,15 +66,37 @@ function Dasboard() {
 
             <styles.ContentAddInfosButtons>
 
-              <styles.ButtonAddOperation>+ Adicionar nova operação</styles.ButtonAddOperation>
+              <styles.ButtonAddOperation onClick={() => setOperation(!operation)}>+ Adicionar nova operação</styles.ButtonAddOperation>
+
+              <styles.ButtonHistoriOperation>
+                <TfiMenuAlt />
+                {' '}
+                <span>Historico de operações</span>
+              </styles.ButtonHistoriOperation>
 
             </styles.ContentAddInfosButtons>
 
-            <styles.ButtonHistoriOperation>
-              <TfiMenuAlt />
-              {' '}
-              <span>Historico de operações</span>
-            </styles.ButtonHistoriOperation>
+            {operation && (
+              <styles.AddOperation>
+                <styles.AddOperationButtonClose>
+                  <IoCloseSharp />
+                </styles.AddOperationButtonClose>
+
+                <styles.AddOperationForm>
+                  <select>
+                    <option>Entrada</option>
+                  </select>
+                </styles.AddOperationForm>
+              </styles.AddOperation>
+            )}
+
+            {!operation && (
+              <styles.AboutInfos>
+                <h2>Gerencie agora seu dinheiro</h2>
+
+                <img src={img} alt="foto de perfil" />
+              </styles.AboutInfos>
+            )}
 
           </styles.ContentAddInfos>
         </styles.DashboardSt>
