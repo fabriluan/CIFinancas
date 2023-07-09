@@ -224,7 +224,7 @@ export const GroupInput = styled.div`
     padding: 2px;
   }
 
-  input[type="text"], input[type="date"]{
+  input[type="number"], input[type="date"]{
     width: 100%;
     border-radius: 0.5rem;
     max-width: 400px;
@@ -235,6 +235,11 @@ export const GroupInput = styled.div`
   input[type="date"]{
     max-width: 200px;
     font-size: 1rem;
+
+    &:disabled{
+      background-color: ${(props) => props.theme.backgroundContent};
+      cursor: not-allowed;
+    }
   }
 
   input[type="checkbox"]{
