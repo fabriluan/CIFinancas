@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiDownArrowCircle, BiUpArrowCircle, BiSolidEditAlt } from 'react-icons/bi';
 import { FaMoneyBills } from 'react-icons/fa6';
 import { TfiMenuAlt } from 'react-icons/tfi';
 import { IoCloseSharp } from 'react-icons/io5';
-import { addDoc, collection } from 'firebase/firestore';
+import {
+  addDoc, collection, getDocs,
+} from 'firebase/firestore';
 import Header from '../../components/Header';
 import Center from '../../components/Center';
 import img from '../../assets/transferencia.png';
@@ -24,6 +26,55 @@ function Dasboard() {
   const [valor, setValor] = useState();
   const [checkData, setCheckData] = useState(false);
   const [description, setDescription] = useState('');
+  const [list, setList] = useState([]);
+  const [loadOperation, setLoadOperation] = useState(false);
+  const [add, setAdd] = useState(0);
+  const [neg, setNeg] = useState(0);
+
+  const LoadDocument = async () => {
+    setLoadOperation(true);
+    await getDocs(collection(db, 'operations'))
+      .then((snapshot) => {
+        const op = [];
+
+        snapshot.forEach((doc) => {
+          op.push({
+            clientUid: doc.data().clientUid,
+            date: doc.data().date,
+            descriptiontype: doc.data().description,
+            type: doc.data().type,
+            valor: doc.data().valor,
+          });
+        });
+
+        setList(op);
+
+        const AddNumero = op.filter((o) => o.type === '1').reduce((acc, obj) => (
+          Number(acc) + Number(obj.valor)
+        ), 0);
+
+        const NegNumero = op.filter((o) => o.type === '2').reduce((acc, obj) => (
+          Number(acc) + Number(obj.valor)
+        ), 0);
+
+        setAdd(AddNumero);
+        setNeg(NegNumero);
+
+        setLoadOperation(false);
+      })
+      .catch(() => {
+        setLoadOperation(false);
+        console.log('error');
+      });
+
+    setLoadOperation(false);
+  };
+
+  useEffect(() => {
+    LoadDocument();
+  }, []);
+
+  console.log(list);
 
   const HandleSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +105,7 @@ function Dasboard() {
       clientUid: uid,
     })
       .then(() => {
-        console.log('sucesso');
+        LoadDocument();
       })
       .catch((error) => {
         console.log(error);
@@ -71,11 +122,19 @@ function Dasboard() {
             <styles.InfosConte>
               <h2>Entrada: </h2>
 
-              <h1>
-                R$:
-                {' '}
-                <l>+ 1.800,00</l>
-              </h1>
+              {loadOperation ? (
+                <h1>Carregando...</h1>
+              ) : (
+                <h1>
+                  R$:
+                  {' '}
+                  <l>
+                    +
+                    {' '}
+                    {add}
+                  </l>
+                </h1>
+              )}
 
               <span>+ R$: 800,00</span>
 
@@ -85,11 +144,19 @@ function Dasboard() {
             <styles.InfosConte isNegative>
               <h2>Saida: </h2>
 
-              <h1>
-                R$:
-                {' '}
-                <l>- 1.800,00</l>
-              </h1>
+              {loadOperation ? (
+                <h1>Carregando...</h1>
+              ) : (
+                <h1>
+                  R$:
+                  {' '}
+                  <l>
+                    -
+                    {' '}
+                    {neg}
+                  </l>
+                </h1>
+              )}
 
               <span>- R$: 800,00</span>
 
@@ -102,7 +169,7 @@ function Dasboard() {
               <h1>
                 R$:
                 {' '}
-                <l>1.800,00</l>
+                {`${add + neg * -1} `}
               </h1>
 
               <span>R$: 800,00</span>
