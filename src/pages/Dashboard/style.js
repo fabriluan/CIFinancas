@@ -160,13 +160,14 @@ export const AboutInfos = styled.section`
 `;
 
 export const OperationAndHistory = styled.section`
+  position: relative;
   width: 100%;
   margin-top: 20px;
   display: flex;
 `;
 
 export const AddOperation = styled.section`
-  position: relative;
+  position: absolute;
   width: 70%;
   margin-right: auto;
   color: ${(props) => props.theme.textLigth};
@@ -271,6 +272,8 @@ export const GroupInput = styled.div`
 `;
 
 export const History = styled.section`
+  position: absolute;
+  right: 0;
   width: 29%;
   padding: 15px;
   margin-left: auto;

@@ -82,7 +82,7 @@ export default function Header() {
         <style.HeaderProfile>
           <h2>{name}</h2>
 
-          <img src={avatarUrl ? `${avatarUrl}` : `${profile}`} alt="foto de perfil" />
+          <img src={avatarUrl || `${profile}`} alt="foto de perfil" />
         </style.HeaderProfile>
 
       </Center>

@@ -4,7 +4,7 @@ import { FaMoneyBills } from 'react-icons/fa6';
 import { TfiMenuAlt } from 'react-icons/tfi';
 import { IoCloseSharp } from 'react-icons/io5';
 import {
-  addDoc, collection, getDocs,
+  addDoc, collection, getDocs, orderBy, query,
 } from 'firebase/firestore';
 import Header from '../../components/Header';
 import Center from '../../components/Center';
@@ -30,10 +30,13 @@ function Dasboard() {
   const [loadOperation, setLoadOperation] = useState(false);
   const [add, setAdd] = useState(0);
   const [neg, setNeg] = useState(0);
+  const [addU, setAddU] = useState(0);
+  const [negU, setNegU] = useState(0);
+  const [listU, setListU] = useState(0);
 
   const LoadDocument = async () => {
     setLoadOperation(true);
-    await getDocs(collection(db, 'operations'))
+    await getDocs(query(collection(db, 'operations'), orderBy('newDate', 'asc')))
       .then((snapshot) => {
         const op = [];
 
@@ -49,16 +52,25 @@ function Dasboard() {
 
         setList(op);
 
-        const AddNumero = op.filter((o) => o.type === '1').reduce((acc, obj) => (
+        const addNumero = op.filter((o) => o.type === '1').reduce((acc, obj) => (
           Number(acc) + Number(obj.valor)
         ), 0);
 
-        const NegNumero = op.filter((o) => o.type === '2').reduce((acc, obj) => (
+        const negNumero = op.filter((o) => o.type === '2').reduce((acc, obj) => (
           Number(acc) + Number(obj.valor)
         ), 0);
 
-        setAdd(AddNumero);
-        setNeg(NegNumero);
+        const ultimoAdd = op.filter((listAdd) => listAdd.type === '1').length > 0 ? op.filter((listAdd) => listAdd.type === '1')[op.filter((listAdd) => listAdd.type === '1').length - 1].valor : 0;
+
+        const ultimoNeg = op.filter((listAdd) => listAdd.type === '2').length > 0 ? op.filter((listAdd) => listAdd.type === '2')[op.filter((listAdd) => listAdd.type === '2').length - 1].valor : 0;
+
+        const ultimo = op.length > 0 ? op[op.length - 1].valor : 0;
+
+        setNeg(negNumero);
+        setAdd(addNumero);
+        setAddU(ultimoAdd);
+        setNegU(ultimoNeg);
+        setListU(ultimo);
 
         setLoadOperation(false);
       })
@@ -103,14 +115,23 @@ function Dasboard() {
       valor,
       description,
       clientUid: uid,
+      newDate: `${dataAtual}:${data.getHours()}:${data.getMinutes()}:${data.getSeconds()}`,
     })
       .then(() => {
         LoadDocument();
+        setValor('');
+        setDataCurrent(dataAtual);
+        setCheckData(false);
+        setDescription('');
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  console.log(list);
+  console.log();
+  console.log(list.length > 0 ? list[list.length - 1] : 0);
 
   return (
     <>
@@ -134,9 +155,18 @@ function Dasboard() {
                     {add}
                   </l>
                 </h1>
+
               )}
 
-              <span>+ R$: 800,00</span>
+              {loadOperation ? (
+                <h6>...</h6>
+              ) : (
+                <span>
+                  +
+                  {' '}
+                  {addU}
+                </span>
+              )}
 
               <BiUpArrowCircle />
             </styles.InfosConte>
@@ -158,7 +188,11 @@ function Dasboard() {
                 </h1>
               )}
 
-              <span>- R$: 800,00</span>
+              <span>
+                - R$:
+                {' '}
+                {negU}
+              </span>
 
               <BiDownArrowCircle />
             </styles.InfosConte>
@@ -169,10 +203,18 @@ function Dasboard() {
               <h1>
                 R$:
                 {' '}
-                {`${add + neg * -1} `}
+                {(add - neg) >= 0 ? '' : '-'}
+                {' '}
+                {`${Math.abs(add - neg)}`}
               </h1>
 
-              <span>R$: 800,00</span>
+              <span>
+                R$:
+                {' '}
+                {list.length > 0 && list[list.length - 1].valor > 0 ? '+' : '-'}
+                {' '}
+                {listU}
+              </span>
 
               <FaMoneyBills />
             </styles.InfosTotal>
@@ -249,13 +291,11 @@ function Dasboard() {
               )}
             </styles.OperationAndHistory>
 
-            {!operation && !history ? (
-              <styles.AboutInfos>
-                <h2>Gerencie agora seu dinheiro</h2>
+            <styles.AboutInfos>
+              <h2>Gerencie agora seu dinheiro</h2>
 
-                <img src={img} alt="foto de perfil" />
-              </styles.AboutInfos>
-            ) : (<u />)}
+              <img src={img} alt="foto de perfil" />
+            </styles.AboutInfos>
 
           </styles.ContentAddInfos>
         </styles.DashboardSt>
