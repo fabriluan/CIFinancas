@@ -11,6 +11,10 @@ export default function Center({ children, class1 }) {
 }
 
 Center.propTypes = {
-  children: PropTypes.string.isRequired,
-  class1: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  class1: PropTypes.string,
+};
+
+Center.defaultProps = {
+  class1: '',
 };

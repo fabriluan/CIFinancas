@@ -126,7 +126,7 @@ export const HomeBanner = styled.section`
   width: 100%;
   height: 85vh;
   min-height: 740px;
-  background-image: url(${(props) => props.isBanner});
+  background-image: url(${(props) => props.$isBanner});
   background-size: 100% 130%;
   background-position: 100%;
 

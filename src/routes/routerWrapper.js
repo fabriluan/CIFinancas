@@ -28,23 +28,23 @@ export default function RouteWrapper({ loggedComponent, defaultComponent, IsPriv
     LoadStorage();
   }, [user]);
 
-  function LoadComponent() {
+  useEffect(() => {
     if (loading) {
-      return (
-        <div>Carregando...</div>
-      );
+      return; // Aguarda até que o carregamento esteja concluído
     }
 
     if (!signed && IsPrivate) {
-      return navigate('/login');
+      navigate('/login');
     }
 
     if (signed && !IsPrivate) {
-      return navigate('/dashboard');
+      navigate('/dashboard');
     }
-  }
+  }, [loading, signed, IsPrivate, navigate]);
 
-  LoadComponent();
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
 
   return signed ? loggedComponent : defaultComponent;
 }

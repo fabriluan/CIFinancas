@@ -29,10 +29,12 @@ export const InfosConte = styled.div`
   }
 
   h1{
+    display: flex;
     font-size: 1.6rem;
 
-    l{
-      color: ${(props) => (props.isNegative ? props.theme.warn : props.theme.sucess)};
+    > p{
+      margin-left: 10px;
+      color: ${(props) => (props.$isNegative ? props.theme.warn : props.theme.sucess)};
     }
   }
 
@@ -40,12 +42,12 @@ export const InfosConte = styled.div`
     display: flex;
     font-size: 1.2rem;
     font-weight: 100;
-    color: ${(props) => (props.isNegative ? props.theme.warn : props.theme.sucess)};
+    color: ${(props) => (props.$isNegative ? props.theme.warn : props.theme.sucess)};
     margin-top: 10px;
   }
 
   svg{
-    color: ${(props) => (props.isNegative ? props.theme.warn : props.theme.sucess)};
+    color: ${(props) => (props.$isNegative ? props.theme.warn : props.theme.sucess)};
     position: absolute;
     font-size: 3.5rem;
     bottom: 20px;
@@ -82,7 +84,7 @@ export const InfosTotal = styled.div`
   }
 
   svg{
-    color: ${(props) => (props.isNegative ? props.theme.warn : props.theme.sucess)};
+    color: ${(props) => (props.$isNegativee ? props.theme.warn : props.theme.sucess)};
     position: absolute;
     font-size: 3.2rem;
     bottom: 20px;
@@ -312,7 +314,7 @@ export const HistoryAction = styled.div`
     width: 35%;
     text-align: left;
     font-size: 1.1rem;
-    color: ${(props) => (props.isColor === '1' ? props.theme.sucess : props.theme.warn)};
+    color: ${(props) => (props.$isColor === '1' ? props.theme.sucess : props.theme.warn)};
   }
 
   div{

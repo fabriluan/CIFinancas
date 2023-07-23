@@ -14,7 +14,9 @@ export const HeaderDashboard = motion(styled.header`
   }
 `);
 
-export const HeaderMenu = styled.button`
+export const HeaderMenu = styled.button.attrs((props) => ({
+  'data-isMargin': props.isMargin,
+}))`
   display: flex;
   background-color: transparent;
   color: ${(props) => props.theme.textLigth};

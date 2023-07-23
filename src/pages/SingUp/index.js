@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUserAlt } from 'react-icons/fa';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import * as style from '../SingIn/style';
@@ -97,6 +97,30 @@ function SingUp() {
     }
   };
 
+  const handleGoogle = () => {
+    const provider = new GoogleAuthProvider();
+
+    signInWithPopup(auth, provider)
+      .then(async (value) => {
+        const { uid } = value.user;
+
+        await setDoc(doc(db, 'users', uid), {
+          nome: value.user.displayName,
+          avatarUrl: value.user.photoURL,
+
+        }).then(() => {
+          const data = {
+            uid,
+            email: value.user.email,
+            name: value.user.displayName,
+            avatarUrl: value.user.photoURL,
+          };
+
+          dispatch(registerUser(data));
+        });
+      });
+  };
+
   return (
     <Center class1="classCenter">
       <style.Sing>
@@ -109,7 +133,7 @@ function SingUp() {
               <span>{mensagemError}</span>
             )
           }
-          <style.GroupInput isAlertName={alertName}>
+          <style.GroupInput $isAlertName={alertName}>
             <FaUserAlt />
             <input
               type="text"
@@ -126,7 +150,7 @@ function SingUp() {
               <span>{mensagemError}</span>
             )
           }
-          <style.GroupInput isAlertEmail={alertEmail}>
+          <style.GroupInput $isAlertEmail={alertEmail}>
             <MdEmail />
             <input
               type="text"
@@ -143,7 +167,7 @@ function SingUp() {
               <span>{mensagemError}</span>
             )
           }
-          <style.GroupInput isAlertPassword={alertPassword}>
+          <style.GroupInput $isAlertPassword={alertPassword}>
             <FaLock />
             <input
               type="text"
@@ -155,11 +179,11 @@ function SingUp() {
             />
           </style.GroupInput>
 
-          <Enter />
+          <Enter google={handleGoogle} />
 
           <style.ButtonForm
             type="submit"
-            isVerif={name && email && password}
+            $isVerif={name && email && password}
             onClick={handleSubmit}
           >
             {load ? 'Criando' : 'Criar'}

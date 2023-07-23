@@ -83,7 +83,7 @@ export const GroupInput = styled.div`
 
   input[name="name"]{
 
-    ${(props) => (props.isAlertName ? (
+    ${(props) => (props.$isAlertName ? (
     `border: 1px solid red;
     color: red;
     &::placeholder{ color: red; }`
@@ -94,7 +94,7 @@ export const GroupInput = styled.div`
 
   input[name="email"]{
 
-    ${(props) => (props.isAlertEmail ? (
+    ${(props) => (props.$isAlertEmail ? (
     `border: 1px solid red;
       color: red;
       &::placeholder{ color: red; }`
@@ -105,7 +105,7 @@ export const GroupInput = styled.div`
 
   input[name="password"]{
 
-    ${(props) => (props.isAlertPassword ? (
+    ${(props) => (props.$isAlertPassword ? (
     `border: 1px solid red;
       color: red;
       &::placeholder{ color: red; }`
@@ -132,8 +132,8 @@ export const ButtonForm = styled.button`
   font-size: 1.5rem;
   font-weight: 700;
   color: ${(props) => props.theme.textLigth};
-  background-color: ${(props) => (props.isVerif ? props.theme.content : props.theme.contentLigth)};
-  cursor: ${(props) => (props.isVerif ? 'pointer' : 'not-allowed')};
+  background-color: ${(props) => (props.$isVerif ? props.theme.content : props.theme.contentLigth)};
+  cursor: ${(props) => (props.$isVerif ? 'pointer' : 'not-allowed')};
   border: 0;
   border-radius: 0.5rem;
 

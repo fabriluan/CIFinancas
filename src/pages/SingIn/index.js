@@ -123,7 +123,7 @@ function SingIn() {
             )
           }
 
-          <style.GroupInput isAlertEmail={alertEmail}>
+          <style.GroupInput $isAlertEmail={alertEmail}>
             <MdEmail />
             <input
               type="text"
@@ -141,7 +141,7 @@ function SingIn() {
             )
           }
 
-          <style.GroupInput isAlertPassword={alertPassword}>
+          <style.GroupInput $isAlertPassword={alertPassword}>
             <FaLock />
             <input
               type="text"
@@ -155,7 +155,7 @@ function SingIn() {
 
           <Enter google={handleGoogle} />
 
-          <style.ButtonForm type="submit" isVerif={email && password} onClick={handleSubmit}>{load ? 'Carregando...' : 'Entrar'}</style.ButtonForm>
+          <style.ButtonForm type="submit" $isVerif={email && password} onClick={handleSubmit}>{load ? 'Carregando...' : 'Entrar'}</style.ButtonForm>
           <Link to="/register">Não possui conta? Crie uma agora</Link>
         </style.Form>
       </style.Sing>

@@ -19,12 +19,24 @@ import Benefit from '../../components/Benefit';
 
 function Home() {
   const benefits = [
-    { icons: <AiFillCalculator />, title: 'Controle Financeiro', text: 'Por meio de conteúdo interativo, ferramentas e calculadoras, o site pode oferecer orientação personalizada para as pessoas avaliarem sua situação financeira atual.' },
-    { icons: <FaMoneyBillWave />, title: 'Gestão de Orçamento', text: 'O site pode fornecer recursos e modelos para auxiliar as pessoas a criar e gerenciar um orçamento eficaz.' },
-    { icons: <AiFillControl />, title: 'Planejamento Financeiro', text: 'Por meio de guias e artigos, o site pode ajudar as pessoas a desenvolver um plano financeiro abrangente para atingir objetivos de longo prazo' },
-    { icons: <AiFillCalculator />, title: 'Controle Financeiro', text: 'Por meio de conteúdo interativo, ferramentas e calculadoras, o site pode oferecer orientação personalizada para as pessoas avaliarem sua situação financeira atual.' },
-    { icons: <FaMoneyBillWave />, title: 'Gestão de Orçamento', text: 'O site pode fornecer recursos e modelos para auxiliar as pessoas a criar e gerenciar um orçamento eficaz.' },
-    { icons: <AiFillControl />, title: 'Planejamento Financeiro', text: 'Por meio de guias e artigos, o site pode ajudar as pessoas a desenvolver um plano financeiro abrangente para atingir objetivos de longo prazo' },
+    {
+      icons: <AiFillCalculator />, title: 'Controle Financeiro', text: 'Por meio de conteúdo interativo, ferramentas e calculadoras, o site pode oferecer orientação personalizada para as pessoas avaliarem sua situação financeira atual.', id: 1,
+    },
+    {
+      icons: <FaMoneyBillWave />, title: 'Gestão de Orçamento', text: 'O site pode fornecer recursos e modelos para auxiliar as pessoas a criar e gerenciar um orçamento eficaz.', id: 2,
+    },
+    {
+      icons: <AiFillControl />, title: 'Planejamento Financeiro', text: 'Por meio de guias e artigos, o site pode ajudar as pessoas a desenvolver um plano financeiro abrangente para atingir objetivos de longo prazo', id: 3,
+    },
+    {
+      icons: <AiFillCalculator />, title: 'Controle Financeiro', text: 'Por meio de conteúdo interativo, ferramentas e calculadoras, o site pode oferecer orientação personalizada para as pessoas avaliarem sua situação financeira atual.', id: 4,
+    },
+    {
+      icons: <FaMoneyBillWave />, title: 'Gestão de Orçamento', text: 'O site pode fornecer recursos e modelos para auxiliar as pessoas a criar e gerenciar um orçamento eficaz.', id: 5,
+    },
+    {
+      icons: <AiFillControl />, title: 'Planejamento Financeiro', text: 'Por meio de guias e artigos, o site pode ajudar as pessoas a desenvolver um plano financeiro abrangente para atingir objetivos de longo prazo', id: 6,
+    },
   ];
 
   const [show, setShow] = useState(false);
@@ -82,12 +94,12 @@ function Home() {
 
       </style.HomeHeader>
 
-      <style.HomeBanner isBanner={banner}>
+      <style.HomeBanner $isBanner={banner}>
         <Center>
           <style.BannerText>
             <span>está com problemas com suas contas?</span>
             <h2>Comece a gerenciar as suas contas agora!</h2>
-            <a href> Gerencie </a>
+            <Link to="/login"> Gerencie </Link>
           </style.BannerText>
         </Center>
       </style.HomeBanner>
@@ -118,7 +130,7 @@ function Home() {
           <style.BenefitInfo>
 
             {benefits.map((benefit) => (
-              <Benefit title={benefit.title} text={benefit.text}>
+              <Benefit key={benefit.id} title={benefit.title} text={benefit.text}>
                 {benefit.icons}
               </Benefit>
             ))}

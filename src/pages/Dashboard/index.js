@@ -21,7 +21,7 @@ function Dasboard() {
 
   const [operation, setOperation] = useState(false);
   const [history, setHistory] = useState(false);
-  const [type, setType] = useState();
+  const [type, setType] = useState(0);
   const [dataCurrent, setDataCurrent] = useState(dataAtual);
   const [valor, setValor] = useState();
   const [checkData, setCheckData] = useState(false);
@@ -107,7 +107,11 @@ function Dasboard() {
           description: deleteField(),
         })
           .then(() => {
-            console.log('atualizado');
+            setType(0);
+            setValor('');
+            setDataCurrent(dataAtual);
+            setDescription('');
+            setCheckId('');
           })
           .catch((error) => {
             console.log(error);
@@ -167,6 +171,7 @@ function Dasboard() {
         setDataCurrent(dataAtual);
         setCheckData(false);
         setDescription('');
+        setType(0);
       })
       .catch((error) => {
         console.log(error);
@@ -221,11 +226,11 @@ function Dasboard() {
                 <h1>
                   R$:
                   {' '}
-                  <l>
+                  <p>
                     +
                     {' '}
                     {add}
-                  </l>
+                  </p>
                 </h1>
 
               )}
@@ -240,7 +245,7 @@ function Dasboard() {
               <BiUpArrowCircle />
             </styles.InfosConte>
 
-            <styles.InfosConte isNegative>
+            <styles.InfosConte $isNegative>
               <h2>Saida: </h2>
 
               {loadOperation ? (
@@ -249,11 +254,11 @@ function Dasboard() {
                 <h1>
                   R$:
                   {' '}
-                  <l>
+                  <p>
                     -
                     {' '}
                     {neg}
-                  </l>
+                  </p>
                 </h1>
               )}
 
@@ -316,7 +321,7 @@ function Dasboard() {
                   <styles.AddOperationForm>
                     <styles.GroupInput>
                       <select value={type} onChange={(e) => setType(e.target.value)}>
-                        <option selected value={0} disabled>Tipo de operação</option>
+                        <option value={0} disabled>Tipo de operação</option>
                         <option value={1}>Entrada</option>
                         <option value={2}>Saída</option>
                       </select>
@@ -355,7 +360,7 @@ function Dasboard() {
 
                   <div>
                     {list.slice(-5).map((element) => (
-                      <styles.HistoryAction isColor={element.type}>
+                      <styles.HistoryAction key={element.id} $isColor={element.type}>
                         <h3>{element.type === '1' ? 'Entrada' : 'Saída'}</h3>
 
                         <p>

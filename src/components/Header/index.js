@@ -49,9 +49,9 @@ export default function Header() {
   };
 
   const Links = [
-    { name: 'Home', href: '/dashboard' },
-    { name: 'Relatorios', href: '/transaction' },
-    { name: 'Perfil', href: '/profile' },
+    { name: 'Home', href: '/dashboard', id: 1 },
+    { name: 'Relatorios', href: '/transaction', id: 2 },
+    { name: 'Perfil', href: '/profile', id: 3 },
   ];
 
   return (
@@ -62,13 +62,13 @@ export default function Header() {
         </style.HeaderMenu>
 
         <style.HeaderMenuShow variants={animateMenu}>
-          <style.HeaderMenu isMargin onClick={handleMenu}>
+          <style.HeaderMenu data-isMargin onClick={handleMenu}>
             <IoCloseOutline />
           </style.HeaderMenu>
 
           <style.HeaderMenuUl>
             {Links.map((link) => (
-              <motion.li variants={animateLink}><Link to={link.href}>{link.name}</Link></motion.li>
+              <motion.li key={link.id} variants={animateLink}><Link to={link.href}>{link.name}</Link></motion.li>
             ))}
           </style.HeaderMenuUl>
 
