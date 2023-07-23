@@ -281,10 +281,15 @@ export const History = styled.section`
   border-radius: 0.5rem;
   background-color: ${(props) => props.theme.contentDark};
 
+  > div{
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
   h2{
     font-size: 1.3rem;
     font-weight: 500;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 `;
 
@@ -299,11 +304,19 @@ export const HistoryAction = styled.div`
   margin-top: 5px;
 
   h3{
-    font-size: 1.1rem;
+    width: 20%;
+    font-size: 1.2rem;
   }
 
   p{
-    color: red;
+    width: 35%;
+    text-align: left;
+    font-size: 1.1rem;
+    color: ${(props) => (props.isColor === '1' ? props.theme.sucess : props.theme.warn)};
+  }
+
+  div{
+    display: flex;
   }
 
   button{
@@ -311,8 +324,9 @@ export const HistoryAction = styled.div`
     border: 0;
     display: flex;
     align-items: center;
+    margin: 0 5px;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: ${(props) => props.theme.textLigth};
   }
 `;

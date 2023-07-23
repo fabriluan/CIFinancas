@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { BiDownArrowCircle, BiUpArrowCircle, BiSolidEditAlt } from 'react-icons/bi';
 import { FaMoneyBills } from 'react-icons/fa6';
 import { TfiMenuAlt } from 'react-icons/tfi';
-import { IoCloseSharp } from 'react-icons/io5';
+import { IoCloseSharp, IoClose } from 'react-icons/io5';
 import {
-  addDoc, collection, getDocs, orderBy, query,
+  addDoc, collection, deleteDoc, deleteField, doc, getDocs, orderBy, query, updateDoc,
 } from 'firebase/firestore';
 import Header from '../../components/Header';
 import Center from '../../components/Center';
@@ -32,6 +32,7 @@ function Dasboard() {
   const [neg, setNeg] = useState(0);
   const [addU, setAddU] = useState(0);
   const [negU, setNegU] = useState(0);
+  const [checkId, setCheckId] = useState('');
   const [listU, setListU] = useState(0);
 
   const LoadDocument = async () => {
@@ -40,13 +41,15 @@ function Dasboard() {
       .then((snapshot) => {
         const op = [];
 
-        snapshot.forEach((doc) => {
+        snapshot.forEach((d) => {
           op.push({
-            clientUid: doc.data().clientUid,
-            date: doc.data().date,
-            descriptiontype: doc.data().description,
-            type: doc.data().type,
-            valor: doc.data().valor,
+            id: d.id,
+            clientUid: d.data().clientUid,
+            date: d.data().date,
+            description: d.data().description,
+            type: d.data().type,
+            valor: d.data().valor,
+            newDate: d.data().newDate,
           });
         });
 
@@ -91,6 +94,45 @@ function Dasboard() {
   const HandleSubmit = async (e) => {
     e.preventDefault();
 
+    const storage = localStorage.getItem('@CIF');
+    const { uid } = JSON.parse(storage);
+
+    const UpdateDocument = async () => {
+      const minhaConsulta = doc(db, 'operations', checkId);
+
+      if (!description) {
+        await updateDoc(minhaConsulta, {
+          type,
+          valor,
+          description: deleteField(),
+        })
+          .then(() => {
+            console.log('atualizado');
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        await updateDoc(minhaConsulta, {
+          type,
+          valor,
+          description,
+        })
+          .then(() => {
+            setType(0);
+            setValor('');
+            setDataCurrent(dataAtual);
+            setDescription('');
+            setCheckId('');
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      LoadDocument();
+    };
+
     if (!type) {
       alert('oi');
       return;
@@ -106,8 +148,10 @@ function Dasboard() {
       return;
     }
 
-    const storage = localStorage.getItem('@CIF');
-    const { uid } = JSON.parse(storage);
+    if (checkId) {
+      UpdateDocument();
+      return;
+    }
 
     await addDoc(collection(db, 'operations'), {
       type,
@@ -129,9 +173,37 @@ function Dasboard() {
       });
   };
 
+  const HandleEdit = (element) => {
+    console.log(element);
+    setOperation(true);
+    setType(element.type);
+    setValor(element.valor);
+    setDataCurrent(element.date);
+    setDescription(element.description);
+    setCheckId(element.id);
+  };
+
+  const HandleDelete = async (id) => {
+    await deleteDoc(doc(db, 'operations', id))
+      .then(() => {
+        console.log('sucesso');
+        LoadDocument();
+      });
+  };
+
+  useEffect(() => {
+    if (!operation) {
+      setType(0);
+      setValor('');
+      setDataCurrent(dataAtual);
+      setDescription('');
+      setCheckId('');
+    }
+  }, [operation]);
+
   console.log(list);
-  console.log();
-  console.log(list.length > 0 ? list[list.length - 1] : 0);
+  // console.log();
+  // console.log(list.length > 0 ? list[list.length - 1] : 0);
 
   return (
     <>
@@ -157,16 +229,13 @@ function Dasboard() {
                 </h1>
 
               )}
-
-              {loadOperation ? (
-                <h6>...</h6>
-              ) : (
-                <span>
-                  +
-                  {' '}
-                  {addU}
-                </span>
-              )}
+              <span>
+                R$:
+                {' '}
+                +
+                {' '}
+                {addU}
+              </span>
 
               <BiUpArrowCircle />
             </styles.InfosConte>
@@ -189,7 +258,9 @@ function Dasboard() {
               )}
 
               <span>
-                - R$:
+                R$:
+                {' '}
+                -
                 {' '}
                 {negU}
               </span>
@@ -245,7 +316,7 @@ function Dasboard() {
                   <styles.AddOperationForm>
                     <styles.GroupInput>
                       <select value={type} onChange={(e) => setType(e.target.value)}>
-                        <option selected disabled>Tipo de operação</option>
+                        <option selected value={0} disabled>Tipo de operação</option>
                         <option value={1}>Entrada</option>
                         <option value={2}>Saída</option>
                       </select>
@@ -266,7 +337,7 @@ function Dasboard() {
                     <styles.GroupInput>
                       <textarea placeholder="Digite uma descrição" value={description} onChange={(e) => setDescription(e.target.value)} />
 
-                      <button type="submit" onClick={HandleSubmit}>Registrar</button>
+                      <button type="submit" onClick={HandleSubmit}>{ checkId ? 'Atualizar' : 'Registrar'}</button>
 
                     </styles.GroupInput>
 
@@ -278,15 +349,36 @@ function Dasboard() {
                 <styles.History>
                   <h2>Historico de operações</h2>
 
-                  <styles.HistoryAction>
-                    <h3>Entrada</h3>
+                  {list.length === 0 && (
+                    <h3>Sem histórico</h3>
+                  )}
 
-                    <p>R$ + 800,00</p>
+                  <div>
+                    {list.slice(-5).map((element) => (
+                      <styles.HistoryAction isColor={element.type}>
+                        <h3>{element.type === '1' ? 'Entrada' : 'Saída'}</h3>
 
-                    <button type="button">
-                      <BiSolidEditAlt />
-                    </button>
-                  </styles.HistoryAction>
+                        <p>
+                          R$
+                          {' '}
+                          {element.type === '1' ? '+' : '-'}
+                          {' '}
+                          {element.valor}
+                        </p>
+
+                        <div>
+                          <button type="button" onClick={() => HandleEdit(element)}>
+                            <BiSolidEditAlt />
+                          </button>
+
+                          <button type="button" onClick={() => HandleDelete(element.id)}>
+                            <IoClose />
+                          </button>
+                        </div>
+                      </styles.HistoryAction>
+                    ))}
+                  </div>
+
                 </styles.History>
               )}
             </styles.OperationAndHistory>
