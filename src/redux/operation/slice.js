@@ -9,8 +9,8 @@ const operationSlice = createSlice({
   initialState,
   reducers: {
 
-    addOperation: async (state, action) => {
-      state.operation = [...state.operation, action.payload];
+    addOperation: (state, action) => {
+      state.operation = [action.payload];
     },
   },
 });

@@ -50,7 +50,7 @@ export default function Header() {
 
   const Links = [
     { name: 'Home', href: '/dashboard', id: 1 },
-    { name: 'Relatorios', href: '/transaction', id: 2 },
+    { name: 'Relatorios', href: '/reports', id: 2 },
     { name: 'Perfil', href: '/profile', id: 3 },
   ];
 

@@ -6,11 +6,13 @@ import { IoCloseSharp, IoClose } from 'react-icons/io5';
 import {
   addDoc, collection, deleteDoc, deleteField, doc, getDocs, orderBy, query, updateDoc,
 } from 'firebase/firestore';
+import { useDispatch } from 'react-redux';
 import Header from '../../components/Header';
 import Center from '../../components/Center';
 import img from '../../assets/transferencia.png';
 import * as styles from './style';
 import { db } from '../../service/firebaseConnection';
+import { addOperation } from '../../redux/operation/slice';
 
 function Dasboard() {
   const data = new Date();
@@ -34,6 +36,8 @@ function Dasboard() {
   const [negU, setNegU] = useState(0);
   const [checkId, setCheckId] = useState('');
   const [listU, setListU] = useState(0);
+
+  const dispatch = useDispatch();
 
   const LoadDocument = async () => {
     setLoadOperation(true);
@@ -74,6 +78,7 @@ function Dasboard() {
         setAddU(ultimoAdd);
         setNegU(ultimoNeg);
         setListU(ultimo);
+        dispatch(addOperation(op));
 
         setLoadOperation(false);
       })
